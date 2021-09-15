@@ -1,31 +1,25 @@
 from GoogleNews import GoogleNews
-import numpy as np
 
-def get_descriptions(search_term, date):
+def search(search_term, date, field='title', num_searches=5):
     googlenews = GoogleNews(start=date, end=date)
     googlenews.search(search_term)
     results = googlenews.results()
-    descriptions = []
-    for i in range(5):
-        descriptions.append(results[i]['desc'])
-    return descriptions
 
-def search(search_term, date):
-    googlenews = GoogleNews(start=date, end=date)
-    googlenews.search(search_term)
-    results = googlenews.results()
-    print('result shape =', np.shape(results))
-    i = 0
-    for key in results[i]:
-        print(key)
-        print(results[i][key])
+    #print('num results =', len(results))
+    # for i in range(len(results)):
+    #     print('SEARCH RESULT', i, ':')
+    #     for key in results[i]:
+    #         print(key, ':', results[i][key])
+
+    strings = []
+    for i in range(min(num_searches, len(results))):
+        strings.append(results[i][field])
+    return strings
 
 if __name__ == '__main__':
     search_term = 'AAPL'
     date = '12/04/2019'
-    descriptions = get_descriptions(search_term=search_term, date=date)
-
-    for description in descriptions:
-        print(description)
-
-    search(search_term, date)
+    field = 'title'
+    list = search(search_term, date, field, num_searches=5)
+    for i, string in enumerate(list):
+        print(field, i, ':', string)

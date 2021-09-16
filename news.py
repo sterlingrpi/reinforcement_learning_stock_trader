@@ -1,6 +1,6 @@
 from GoogleNews import GoogleNews
 
-def search(search_term, date, field='title', num_searches=5):
+def get_news(search_term, date, field='title', num_searches=5):
     googlenews = GoogleNews(start=date, end=date)
     googlenews.search(search_term)
     results = googlenews.results()
@@ -20,6 +20,6 @@ if __name__ == '__main__':
     search_term = 'AAPL'
     date = '12/04/2019'
     field = 'title'
-    list = search(search_term, date, field, num_searches=5)
+    list = get_news(search_term, date, field, num_searches=5)
     for i, string in enumerate(list):
         print(field, i, ':', string)
